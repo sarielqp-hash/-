@@ -103,5 +103,5 @@ theme: cola
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://sariel:01339wJb8piaVnOHdSe8IjKChqB@cnb.cool/saturu.fun/saturo.git
+  repo: https://cnb:5qsCPg1674yfiRHTtrHtqchLp3LE@cnb.cool/saturu.fun/saturo.git
   branch: main
