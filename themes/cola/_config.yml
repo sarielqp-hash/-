@@ -1,0 +1,74 @@
+title: 真岛芳树
+# 左侧栏标签
+tag1: 中二
+tag2: 宅
+
+# 左侧栏Github连接
+github_url: https://github.com/sarielqp-hash
+
+# 座右铭
+motto_prev: "想0.5倍播放幸福的日子"
+motto_last: "内心盈余者，独行也如众"
+
+# 建站日期
+public_date: 2006-12-07
+
+# 头像（关键修改）
+avatar: /imgss/b_c3d5d773374266f5ad1a67c3a882590c.jpg
+
+# 左侧栏菜单
+menu:
+  - [小站首页, '/', 'icon-shouye']
+  - [个人日志, '/log', 'icon-rizhi']
+  - [友情链接, '/link', 'icon-youqinglianjie']
+  - [关于自己, '/about', 'icon-guanyuwomen']
+  - [我的工具, '/tools', 'icon-gongju']
+
+# 友情连接：头像、名字、链接
+links:
+ - ['https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg', 'Hexo.', 'https://hexo.io/zh-cn/']
+
+# 右侧栏公告
+notice: 关于我的故事，请你了解
+musics:
+  # 右侧音乐列表：歌名、作者、链接
+  - ['把回忆拼好给你','','/music/把回忆拼好给你.mp3']
+  - ['月虹','','/music/月虹.mp3']
+
+# 个人介绍
+likes:
+  - 姓名：真岛芳树
+  - 生日：12.7
+  - 性别：沃尔玛塑料袋
+  - 家乡：凭什么告诉你
+  - 现居住地：凭什么告诉你
+  - 职业：凭什么告诉你
+  - 喜欢：凭什么告诉你
+
+# 工具配置：封面，标题，介绍，链接
+tools:
+  # - ['https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/30e94204580a4dbd83a64d4f91a9a6e5~tplv-k3u1fbpfcp-no-mark:240:240:240:160.awebp?', 'PNG图片压缩器', '这是一款无损压缩PNG图片的在线工具，可以童工上传或拖动来批量压缩图片并打包下载', 'http://1.14.43.39:5000/']
+  - ['https://coke-cola.gitee.io/resume-page/assets/dark-f439b888.jpeg', '在线简历生成器', '一个免费的在线简历生成工具', 'https://coke-cola.gitee.io/resume-page/#/']
+
+# 右侧栏网站信息
+copyright: 英国伦敦1207
+
+
+# 文章评论 
+comments:
+  enable: true
+  type: cusdis
+  host: 'https://cusdis.com'
+  appId: '1e28e436-d734-49fd-96c9-749f778cbe6d'
+  pageSize: 10
+  lang: 'zh-CN'
+  placeholder: '请留下你宝贵的意见吧~'
+  requiredFields: ['nick']
+# 纪念模式 none: 不设置 all：全部置灰 index: 首页置灰
+gray: none
+
+# 日志篇幅超过1000字后隐藏（最大高度为1000px)，1000可为任意数值
+log_text_num: 1000
+
+# 版本号
+version: 12.7
