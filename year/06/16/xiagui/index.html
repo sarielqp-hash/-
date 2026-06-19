@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我的技术与生活——夏鬼 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/-/imgs/shortcut-icon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/-/css/public.css" />
+  <link rel="stylesheet" href="/-/css/layout.css" />
+  <link rel="stylesheet" href="/-/css/iconfont.css" />
+  <link rel="stylesheet" href="/-/css/APlayer.min.css" />
+  <script src="/-/js/APlayer.min.js"></script>
+  <script src="/-/js/jquery.min.js"></script>
+  <script src="/-/js/jquery.pjax.min.js"></script>
+
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script>
+    document.title = `我的技术与生活——夏鬼`
+  </script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<style>
+  .load {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(37, 35, 40);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+  }
+  .load-circle {
+    width: 80px;
+    height: 80px;
+    border: 8px solid orange;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotate 1s linear infinite;
+    filter: drop-shadow(0 0 3px orange);
+  }
+  .load-circle-inner {
+    width: 40px;
+    height: 40px;
+    border: 8px solid orange;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate-reverse .5s linear infinite;
+  }
+  .load-text {
+    margin-top: 20px;
+    font-size: 24px;
+    color: orange;
+    display: flex;
+  }
+  .load-text span {
+    margin: 0 5px;
+    text-shadow: 5px 5px 5px orange;
+    animation: move 1s linear infinite;
+  }
+  .load-text span:nth-child(1) {
+    animation-delay: -0.6s;
+  }
+  .load-text span:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  .load-text span:nth-child(3) {
+    animation-delay: -0.4s;
+  }
+  .load-text span:nth-child(4) {
+    animation-delay: -0.3s;
+  }
+  .load-text span:nth-child(5) {
+    animation-delay: -0.2s;
+  }
+  .load-text span:nth-child(6) {
+    animation-delay: -0.1s;
+  }
+  @keyframes rotate {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes rotate-reverse {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(-360deg); }
+  }
+  @keyframes move {
+    0% { transform: translateY(0%) rotate(0) scale(1); }
+    20% { transform: translateY(20%) rotate(10deg) scale(1.2); }
+    80% { transform: translateY(-10%) rotate(-20deg) scale(.8);}
+    100% { transform: translateY(0) rotate(0) scale(1); }
+  }
+
+  .progress {
+    position: fixed;
+    left: 0; top: 0;
+    width: 0;
+    height: 3px;
+    background-color: green;
+    transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .1s;
+    z-index: 9999;
+  }
+
+  .to-up {
+    animation: toUp .5s 1;
+  }
+  .gray {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: none;
+    pointer-events: none;
+    background-color: #000;
+    mix-blend-mode: color;
+  }
+  @keyframes toUp {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0) ; opacity: 1; }
+  }
+</style>
+<body>
+  <div id="load" class="load">
+    <div class="load-circle">
+      <div class="load-circle-inner"></div>
+    </div>
+    <p class="load-text">
+      <span>L</span>
+      <span>O</span>
+      <span>A</span>
+      <span>D</span>
+      <span>I</span>
+      <span>N</span>
+      <span>G</span>
+    </p>
+  </div>
+  <div id="container" class="container w-100 vh-100" style="display: none;">
+    <header class="header">
+  <div class="header-wrapper">
+    <div class="header-left">
+      <div class="header-search">
+        <input id="search-input" type="text" class="header-search--input" placeholder="请输入要检索的文章标题" />
+        <span id="search-btn" class="header-search--icon"><i class="iconfont icon-sousuo"></i></span>
+      </div>
+      <div id="search-layer" class="header-search--layer hidden">
+        <p class="title">
+          <span>以下是搜索内容：</span>
+          <span id="close-layer-btn">关闭</span>
+        </p>
+        <ul>
+        </ul>
+      </div>
+    </div>
+    <div class="header-right">
+      <ul class="header-menu">
+        <li>
+          <a href="https://sarielqp-hash.github.io/-/">
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+            <span class="header-menu--span">首页</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://sarielqp-hash.github.io/-/log">
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+            <span class="header-menu--span">日志</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://sarielqp-hash.github.io/-/link">
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+            <span class="header-menu--span">友情链接</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://sarielqp-hash.github.io/-/about">
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+            <span class="header-menu--span">关于我</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const ipt = document.querySelector('#search-input')
+  const btn = document.querySelector('#search-btn')
+  const layer = document.querySelector('#search-layer')
+  const posts = JSON.parse(`[{"title":"Amireux","path":"year/06/16/Amireua/"},{"title":"关于五条悟","path":"year/06/15/gojo/"},{"title":"Amireux2","path":"year/06/16/Amireua2/"},{"title":"Hello World","path":"year/06/15/hello-world/"},{"title":"夏鬼","path":"year/06/16/xiagui/"}]`)
+  ipt.addEventListener('keyup', e => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  })
+  btn.addEventListener('click', () => {
+    handleSearch()
+  })
+
+  document.querySelector('#close-layer-btn').addEventListener('click', () => {
+    layer.classList.toggle('hidden')
+  })
+
+  function handleSearch() {
+    if (ipt.value.trim() === '') {
+      return
+    }
+    let html = ''
+    const targetPosts = posts.filter(post => post.title.includes(ipt.value))
+    targetPosts.forEach(post => {
+      html += `
+        <li>
+          <div>
+            <a href="/${post.path}">${post.title.replace(new RegExp(ipt.value), `<span>${ipt.value}</span>`)}</a>
+          </div>
+          <img src="${post.cover || '/imgs/default-cover.webp' }" />
+        </li>
+      `
+    })
+    if (html.trim () === '') {
+      html += '<p class="empty">没有搜索到内容</p>'
+    }
+    layer.querySelector('ul').innerHTML = html
+    layer.classList.remove('hidden')
+  }
+</script> 
+    <section id="main" class="main">
+      <div class="main-left-wrapper">
+<div class="main-left">
+  <div class="main-left--block">
+    <div class="main-left--info">
+      <img src="/-/imgs/avatar.jpg"" class="main-left--avatar" />
+      <div class="main-left--intro">
+        <p class="main-left--name"></p>
+        <div class="main-left--tags">
+          <span class="main-left--tag">中二</span>
+          <span class="main-left--tag">宅</span>
+        </div>
+      </div>
+    </div>
+  
+    <div>
+      <div class="main-left--motto">
+        <p>想0.5倍播放幸福的日子</p>
+        <p>内心盈余者，独行也如众</p>
+      </div>
+      <div class="main-left--github">
+        <span class="line"></span>
+        <a target="_blank" rel="noopener" href="https://github.com/sarielqp-hash"><i class="logo iconfont icon-github-fill"></i></a>
+        <span class="line"></span>
+      </div>
+      <div class="main-left--statics">
+        <a href="/categories">
+          <div>
+            <span>1</span>
+            <span>分类</span>
+          </div>
+        </a>
+        <a href="/tags">
+          <div>
+            <span>7</span>
+            <span>标签</span>
+          </div>
+        </a>
+        <a href="/archives">
+          <div>
+            <span>1 </span>
+            <span>归档</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-left--block">
+    <ul class="main-left--menu">
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">小站首页</span>
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/log">
+            <span class="header-menu--span">个人日志</span>
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/link">
+            <span class="header-menu--span">友情链接</span>
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/about">
+            <span class="header-menu--span">关于自己</span>
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tools">
+            <span class="header-menu--span">我的工具</span>
+            <i class="header-menu--icon iconfont icon-gongju"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="main-left--block">
+    <div class="main-left--site">
+      <h5 class="main-left--title">
+        <span>站点信息</span>
+        <i class="iconfont icon-zhandian"></i>
+      </h5>
+      <p class="main-left--subtitle">
+        <span>文章数目：</span>
+        <span>5 篇</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>最近动态：</span>
+        <span>3天前</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>上线时间：</span>
+        <span>7135天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>当前版本：</span>
+        <span>v12.7</span>
+      </p>
+    </div>
+  </div>
+</div></div>
+      <div id="main-container" class="main-container">
+
+
+  <link rel="stylesheet" href="/-/css/partial/article.css" />
+
+<div class="article-container">
+  <div class="article">
+    <h1 class="article-title">夏鬼</h1>
+    <div class="article-info">
+      <div class="article-info--item">
+        <div class="article-info--info">
+          
+          <div class="article-info--categories">
+            <span>分类：</span>
+            <a class="category-link" href="/-/categories/%E7%9F%AD%E7%AF%87%E6%95%85%E4%BA%8B/">短篇故事</a>
+          </div>
+          
+          
+          <div class="article-info--tags">
+            <span>标签：</span>
+            <a class="tag-link" href="/-/tags/%E5%90%8C%E4%BA%BA/" rel="tag">同人</a><a class="tag-link" href="/-/tags/%E5%92%92%E6%9C%AF%E5%9B%9E%E6%88%98/" rel="tag">咒术回战</a><a class="tag-link" href="/-/tags/%E7%9F%AD%E7%AF%87/" rel="tag">短篇</a>
+          </div>
+          
+          <p class="article-info--date">日期：2026-06-16 18:35:00</p>
+        </div>
+        <img src="/-/imgs/default-cover.webp" alt="" class="article-cover">
+      </div>
+    </div>
+    <article class="article-content markdown-body">
+      <p>“我说你啊……”</p>
+<p>早川清转过头，语气懒洋洋的。</p>
+<p>“为什么一直跟着我？你不是人吧。”</p>
+<p>黄昏的光轻飘飘穿过躯体，地面干净得没有半分影子。</p>
+<p>“你能看到我吗？”我看着面前年少的少年，看着这个我亲手守着长大的孩子。</p>
+<p>从他降生啼哭的那一刻起，我停滞许久的时间终于重新流转——我终于等到了那个人。</p>
+<p>“废话。”他皱起眉，语气带着少年独有的不耐。</p>
+<p>我常常无意识将他与记忆深处的身影重叠。明明魂魄同源，我却从未见过年少时的五条悟。</p>
+<p>他转身往前走，没有回头，我安静跟在他身后，岁岁年年，皆是如此。</p>
+<hr>
+<p>早川清八岁那年，第一次看见我。</p>
+<p>他后来坦言，最初看得见我的那段日子，他其实无比害怕。</p>
+<p>“啊，完全看不出来。早川君那时候明明看起来超级酷。”我笑着打趣。</p>
+<p>他瞬间有些炸毛：“哈？哪个小孩能接受家里凭空多一个只有自己看得见的女鬼啊！”</p>
+<p>转眼数年，早川已是国中三年级生。</p>
+<p>最初的恐惧早已褪去，我存在于他的世界，变成了理所当然的习惯。</p>
+<hr>
+<p>我是穗。</p>
+<p>自他降生之日起，我便守在他身边。</p>
+<p>旁人总说，早川清幼时格外闹腾，一哭闹，父母便手足无措。</p>
+<p>儿时的他总被母亲恐吓，不听话的小孩，会被山里的鬼带走。</p>
+<p>八岁那年夏夜，他偷偷溜出门玩耍，转头看见身前之人没有影子，那一刻，往日的恐吓尽数成真。</p>
+<p>我笑着同初次真正看见我的少年自我介绍。</p>
+<p>“はじめまして、どうぞよろしくお願いします。我是江穗，是早川君的守护神。”</p>
+<p>他脸红得彻底，慌乱又窘迫。</p>
+<p>“谁初次见面会说自己是守护神啊！太奇怪了！”</p>
+<p>某个午后，他在杂物间翻出一把老旧铁钥匙。</p>
+<p>柄身布满暗红锈迹，透光望去，斑驳纹路古老又沉默。</p>
+<p>穗轻声道：“这种老式锁，已经很少见了。”</p>
+<p>他打趣：“你该不会从原始时代就活着了吧！”</p>
+<p>“早川君说话真幽默呢。”</p>
+<p>她总这样，带着一副漫长岁月沉淀下来的、近乎长辈的温柔口吻。</p>
+<p>闲谈无事，她常常失神发呆。</p>
+<p>某次听见电视里响起“五条”的姓氏，她骤然僵住，眼底情绪一瞬翻涌。</p>
+<p>“怎么了？”</p>
+<p>“只是想起，从前有位同期，也姓五条。”</p>
+<p>“是很重要的人吧。”</p>
+<p>她睁圆双眼，有些无措：“为什么这么想？”</p>
+<p>“如果只是普通朋友，不会露出那么寂寞的神情。”</p>
+<p>她抬手轻掩脸颊，不再言语。</p>
+<p>每年十二月落雪之时，她发呆的时间总会格外漫长。</p>
+<p>无人看见的角落，她静静摊开掌心，像是想接住漫天早已不属于她的白雪。</p>
+<p>少年逐渐长大，她陪伴的时间慢慢变少。</p>
+<p>她说，少年人的青春该属于朋友、属于热闹、属于自己。</p>
+<p>我们只剩睡前短暂闲谈。</p>
+<p>我也是那时才知晓，十二月七日，是她的生日。</p>
+<p>她偶尔脱口而出“我们那时候”，又会迅速改口，轻轻说成“从前”。</p>
+<p>我始终疑惑。</p>
+<p>那个从前，那个我们，是否也包含那个名为五条悟的男人。</p>
+<hr>
+<p>转瞬，早川清十六岁。</p>
+<p>我看着这个我亲手守大的少年，时常恍惚。</p>
+<p>样貌相似，习惯略同，可他终究和记忆里的那个人完全不同。</p>
+<p>他不爱过甜的食物，笑起来眉眼弧度不同，性格沉静温柔，岁岁成长，模样愈发鲜明。</p>
+<p>他到底是转世的五条悟，还是仅仅只是早川清。</p>
+<p>我始终找不到答案。</p>
+<p>夏日蝉鸣聒噪，庭院微风轻拂。</p>
+<p>少年抬头望向晴空，轻声问我。</p>
+<p>“穗，无论我以后做什么决定，你都会陪着我，对吗？”</p>
+<p>“怎么突然这么问？”</p>
+<p>“我打算去东京读大学。那么远的地方，穗也会陪着我吗？”</p>
+<p>东京。</p>
+<p>短短两个字，掀起我尘封百年的过往。</p>
+<p>那是我曾驻足、爱过、痛过、哭过、停留过的城市。</p>
+<p>回忆翻涌，甜苦纠缠，早已分不清孰多孰少。</p>
+<p>我守着执念等待百年，如今眼前人是转世魂魄，我却开始彻底迷茫。</p>
+<p>他忽然轻声，一语刺破我所有隐秘。</p>
+<p>“那个五条悟，和我有关系对不对。”</p>
+<p>“你每次看着我的时候，都在透过我看他。”</p>
+<p>“我是他的前世，是吗。”</p>
+<p>我沉默无言，所有秘密被他一语戳破。</p>
+<p>少年眼底带着少年人独有的执拗、不甘、与酸涩。</p>
+<p>“果然，是真的。”</p>
+<p>“对不起。”</p>
+<p>他声音发哑，重复一遍。</p>
+<p>“真恶心。”</p>
+<p>风穿庭院，吹散夏日燥热，也吹凉了我们之间所有温柔。</p>
+<p>他起身，转身跑远。</p>
+<p>自那天起，他刻意无视我的存在。</p>
+<p>或许，我也该好好理清自己纠缠百年的心。</p>
+<p>我在他房间静静等他。</p>
+<p>我刻意避开数日，不想让他困扰。</p>
+<p>门被推开，他看见我的瞬间，目光闪躲，眼底藏着熬夜留下的青黑。</p>
+<p>“穗……”</p>
+<p>“早川君。”</p>
+<p>他低头，声音认真又倔强。</p>
+<p>“让我先说。那天是我不好，说了过分的话。”</p>
+<p>“但我不甘心。”</p>
+<p>“我不要当任何人的替身。总有一天，我要让穗，完完整整爱上早川清。”</p>
+<p>他抬眼，眼底是澄澈干净的蓝，干净得让我记忆震颤。</p>
+<p>尘封百年的契约骤然浮现。</p>
+<p>我的束缚，我的诅咒，我的百年孤独。</p>
+<p>——只要转世的他再度爱上我，他的灵魂便归位，一切归零。</p>
+<p>我轻声摇头。</p>
+<p>“我没有把你当成替身。”</p>
+<p>“我不管。”少年执拗固执，眼底滚烫，“我会让你爱上我的。”</p>
+<p>我心底一片酸涩茫然。</p>
+<p>我的执念、我的偏爱、我的百年等待，从来只属于五条悟一个人。</p>
+<p>哪怕眼前人是他转世魂魄。</p>
+<p>可早川清，终究不是他。</p>
+<p>我轻声致歉。</p>
+<p>“对不起。”</p>
+<p>“去找一个好好爱你的人吧。”</p>
+<hr>
+<p>清晨鸟鸣清脆。</p>
+<p>早川清骤然睁眼醒来。</p>
+<p>房间安静，天光温柔。</p>
+<p>原来，所有纠缠、所有酸涩、所有未说出口的喜欢。</p>
+<p>都只是一场漫长又遗憾的梦。</p>
+<p>真岛芳树</p>
+
+    </article>
+    
+    <div class="read-nums">
+      <!-- id 将作为查询条件 -->
+      <span id="year/06/16/xiagui/" class="leancloud_visitors" data-flag-title="Your Article Title">
+        <em class="post-meta-item-text">浏览量</em>
+        <i class="leancloud-visitors-count"></i>
+      </span>
+    </div>
+    <div class="comments-intro">
+      <h2>评论区</h2>
+      <p>欢迎你留下宝贵的意见，昵称输入QQ号会显示QQ头像哦~</p>
+    </div>
+    <div id="vcomments" class="vcomments"></div>
+    
+  </div>
+  <div class="article-catelogue">
+    <div class="article-catelogue--wrapper">
+      <div class="catelogue catelogue-1">
+        <h3>目录</h3>
+        
+      </div>
+      
+        <div class="catelogue catelogue-2">
+          
+            <p>
+              <span>上一篇：</span>
+              <a href="/year/06/16/Amireua2/">Amireux2</a>
+            </p>
+           
+          
+            <p>
+              <span>下一篇</span>
+              <a href="/year/06/16/Amireua/">Amireux</a>
+            </p>
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // var定义，避免pjax重新进来造成的重复声明错误
+  var config = JSON.parse('{"enable":true,"type":"cusdis","host":"https://cusdis.com","appId":"1e28e436-d734-49fd-96c9-749f778cbe6d","pageSize":10,"lang":"zh-CN","placeholder":"请留下你宝贵的意见吧~","requiredFields":["nick"]}')
+  new Valine({
+    el: '#vcomments',
+    appId: config.appId,
+    appKey: config.appKey,
+    placeholder: config.placeholder,
+    meta: config.meta,
+    recordIP: config.recordIP,
+    visitor: config.visitor,
+    enableQQ: config.enableQQ,
+    path: 'year/06/16/xiagui/'
+  })
+</script>
+
+
+<script>
+  $(document).on('pjax:complete', function() {
+    const tocs = document.querySelector('.toc')
+    const links = tocs ? tocs.querySelectorAll('a') : []
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = decodeURIComponent(e.href)
+        href.search(/#(.*)/)
+        const id = RegExp.$1
+        const target = document.querySelector('#' + id)
+        const top = target.offsetTop
+        document.documentElement.scrollTo({
+          top: top - 100,
+          behavior: 'smooth'
+        })
+        e.preventDefault()
+      })
+    })
+  })
+</script> 
+
+</div>
+      <div class="main-right-wrapper"><div class="main-right">
+  <div class="main-right--board">
+    <div class="main-right--title">
+      <h5>公告栏</h5>
+      <i class="iconfont icon-gonggao"></i>
+    </div>
+    <div class="main-right--content">
+      关于我的故事，请你了解 
+    </div>
+  </div>
+
+  <div id="aplayer" class="main-right--music"></div>
+
+  <div class="operate-items">
+    <div class="operate-item backtop">
+      <i class="iconfont icon-huidaodingbu"></i>
+      <span>回到顶部</span>
+    </div>
+    
+    <div class="operate-item turn-comment hidden">
+      <i class="iconfont icon-pinglun"></i>
+      <span>查看评论</span>
+    </div>
+    
+  </div>
+
+  <div class="main-right--site">
+    <div class="main-right--power">
+      <p>Power By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a>.</p>
+      <p>Theme：<a target="_blank" rel="noopener" href="https://github.com/Aizener/hexo-theme-cola">Cola.</a></p>
+    </div>
+    <p class="main-right--refer"><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/#/Integrated/index">英国伦敦1207</a> </p>
+  </div>
+</div>
+
+<script>
+  function setOperateItem () {
+    const reg = /\d{4}\/\d{2}\/\d{2}\/.+/
+    const path = location.pathname
+    const operateDom = document.querySelector('.main-right .operate-items')
+    const commentDom = document.querySelector('.turn-comment')
+    const cateloguDom = document.querySelector('.article-catelogue > .article-catelogue--wrapper');
+
+    if (commentDom) {
+      if (reg.test(path) || path.match(/\/log\/.+/)) {
+        commentDom.classList.remove('hidden')
+        const newDom = operateDom.cloneNode(true);
+        const _backtopDom = newDom.querySelector('.backtop');
+        const _commentDom = newDom.querySelector('.turn-comment');
+        _backtopDom.addEventListener('click', () => backTopEvent());
+        _commentDom.addEventListener('click', () => commentDomEvent());
+        cateloguDom.appendChild(newDom);
+      } else {
+        commentDom.classList.add('hidden')
+      }
+    }
+  }
+
+  setOperateItem()
+  const musics = JSON.parse(`[{"name":"把回忆拼好给你","artist":"","url":"/music/把回忆拼好给你.mp3","cover":"/-/"},{"name":"月虹","artist":"","url":"/music/月虹.mp3","cover":"/-/"}]`)
+  const ap = new APlayer({
+    container: document.querySelector('#aplayer'),
+    audio: musics,
+  })
+
+  $(document).on('pjax:complete', function() {
+    setOperateItem()
+  })
+
+  document.querySelector('.backtop').addEventListener('click', () => {
+    backTopEvent();
+  })
+  const dom = document.querySelector('.turn-comment')
+  dom && dom.addEventListener('click', () => {
+    commentDomEvent();
+  })
+
+  function backTopEvent() {
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  function commentDomEvent() {
+    const commentDom = document.querySelector('.comments-intro')
+    if (!commentDom) return
+    const top = commentDom.offsetTop, height = commentDom.offsetHeight
+    document.documentElement.scrollTo({
+      top: top - 2 * height,
+      behavior: 'smooth'
+    })
+  }
+</script></div>
+    </section>
+  </div>
+  <div id="progress" class="progress"></div>
+  <div id="gray" class="gray"></div>
+
+  <script>
+    function initScroll () {
+      document.addEventListener('scroll', () => {
+        const doc = document.documentElement
+        const scrollTop = doc.scrollTop
+        const pageHeight = doc.offsetHeight
+        const clientHeight = doc.clientHeight
+        const ratio = scrollTop / (pageHeight - clientHeight)
+        const progress = document.querySelector('#progress')
+        const avatarImg = document.querySelector('.main-left--avatar')
+        progress.style.width = (100 * ratio) + '%'
+        avatarImg.style.transform = `rotate(${360 * ratio}deg)`
+      })
+    }
+
+    const rootPath = "/-/"
+
+    const checkAndSetArticlePageLayout = () => {
+      const path = location.pathname.replace(rootPath, '');
+      if (
+        /^\/?\d{4}\/\d{2}\/\d{2}\/.*/.test(path) ||
+        /^log\/.+/.test(path)
+      ) {
+        $('.main-container, .main-right, .main-right-wrapper').addClass('is-article')
+      } else {
+        $('.main-container, .main-right, .main-right-wrapper').removeClass('is-article')
+      }
+    }
+
+    const gray = "none"
+    const setGrayStyle = () => {
+      if (gray === 'none') {
+        return
+      } else if (gray === 'index') {
+        location.pathname === '/' ? $('#gray').show() : $('#gray').hide()
+      } else if (gray === 'all') {
+        $('#gray').show()
+      }
+    }
+    setGrayStyle()
+
+
+    window.onload = function () {
+      checkAndSetArticlePageLayout()
+      setTimeout(() => {
+        $('#load').slideUp()
+        $('#container').slideToggle()
+        setTimeout(() => {
+          initScroll();
+        }, 500)
+      }, 500)
+    }
+    
+    let status = 0
+    // 对所有链接跳转事件绑定pjax容器container
+    $(document).pjax('a[target!=_blank]', '#main-container', {
+      container: '#main-container',
+      fragment: '#main-container',
+      timeout: 8000
+    })
+
+    $(document).on('pjax:start', function() {
+    })
+    $(document).on('pjax:complete', function() {
+      status = 0
+      $('.main-container').addClass('to-up').on('animationend', function() {
+        $(this).removeClass('to-up')
+      })
+      setGrayStyle()
+      checkAndSetArticlePageLayout()
+    })
+    $(document).on('pjax:popstate', function() {
+      status = -1
+      checkAndSetArticlePageLayout()
+    });
+  </script>
+</body>
+</html>
